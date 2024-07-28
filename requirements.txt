@@ -22,5 +22,6 @@ Werkzeug==3.0.0
 gunicorn
 
 #Successfully installed flask-2.2.2 werkzeug-2.3.7
-
+#[notice] A new release of pip is available: 24.0 -> 24.1.2
+#[notice] To update, run: pip install --upgrade pip
 -e .
