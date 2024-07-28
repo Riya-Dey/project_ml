@@ -1,0 +1,39 @@
+<html>
+<body>
+    <div class="prediction-form">
+       <h1>Air Quality Prediction</h1>
+   
+       <form action="{{ url_for('predict_datapoint')}}" method="post">
+        <h1>
+            <legend>Enter Air Quality Parameters</legend>
+        </h1>
+        <div class="mb-3">
+            <label class="form-label">PM2.5 (µg/m³)</label>
+            <input class="form-control" type="number" name="PM2_5" placeholder="Enter PM2.5 level" step="0.01" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">NO2 (µg/m³)</label>
+            <input class="form-control" type="number" name="NO2" placeholder="Enter NO2 level" step="0.01" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">CO (mg/m³)</label>
+            <input class="form-control" type="number" name="CO" placeholder="Enter CO level" step="0.01" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">SO2 (µg/m³)</label>
+            <input class="form-control" type="number" name="SO2" placeholder="Enter SO2 level" step="0.01" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">O3 (µg/m³)</label>
+            <input class="form-control" type="number" name="O3" placeholder="Enter O3 level" step="0.01" required />
+        </div>
+        <div class="mb-3">
+            <input class="btn btn-primary" type="submit" value="Predict Air Quality" required />
+        </div>
+    </form>
+    <h2>
+       The prediction is: {{results}}
+    </h2>
+</div>
+</body>
+</html>
