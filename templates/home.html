@@ -1,45 +1,291 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AQI Calculation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        header {
+            background-color: #00796b;
+            color: #fff;
+            padding: 1rem 0;
+            border-bottom: 4px solid #004d40;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        header h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+        .toggle-button {
+            position: absolute;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .toggle-button:hover {
+            color: #004d40;
+        }
+        .prediction-form {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .prediction-form h1 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #00796b;
+        }
+        .prediction-form h2 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #004d40;
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            color: #00796b;
+        }
+        .form-control {
+            width: calc(100% - 2rem);
+            margin: 0 auto 1rem;
+            padding: 0.5rem;
+            border: 1px solid #00796b;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .form-control:focus {
+            border-color: #004d40;
+            outline: none;
+        }
+        .btn-primary {
+            background-color: #00796b;
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #004d40;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        .dark-mode header {
+            background-color: #1f1f1f;
+            border-bottom: 4px solid #383838;
+        }
+        .dark-mode .prediction-form {
+            background-color: #1e1e1e;
+        }
+        .dark-mode .prediction-form h1 {
+            color: #a0d0d4;
+        }
+        .dark-mode .prediction-form h2 {
+            color: #e0e0e0;
+        }
+        .dark-mode .form-label {
+            color: #a0d0d4;
+        }
+        .dark-mode .form-control {
+            border: 1px solid #333333;
+            color: #e0e0e0;
+            background-color: #1e1e1e;
+        }
+        .dark-mode .form-control:focus {
+            border-color: #e0e0e0;
+        }
+        .dark-mode .btn-primary {
+            background-color: #1f1f1f;
+            color: #e0e0e0;
+        }
+        .dark-mode .btn-primary:hover {
+            background-color: #333333;
+        }
+        .dark-mode .aqi-table th {
+            background-color: #333333;
+            color: #e0e0e0;
+        }
+        .dark-mode .aqi-table tr:nth-child(even) {
+            background-color: #1e1e1e;
+        }
+        .dark-mode .aqi-table tr:nth-child(odd) {
+            background-color: #2c2c2c;
+        }
+        .dark-mode .aqi-table tr:hover {
+            background-color: #333333;
+            color: #ffffff;
+        }
+        .dark-mode .aqi-table caption {
+            color: #a0d0d4;
+        }
+        .aqi-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem auto;
+            max-width: 800px;
+            border: 1px solid #00796b;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .aqi-table caption {
+            font-size: 1.4rem;
+            margin: 1rem 0;
+            color: #004d40;
+            font-weight: bold;
+        }
+        .aqi-table th, .aqi-table td {
+            border: 1px solid #00796b;
+            padding: 0.75rem;
+            text-align: center;
+        }
+        .aqi-table th {
+            background-color: #00796b;
+            color: #fff;
+        }
+        .aqi-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .aqi-table tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+        .aqi-table tr:hover {
+            background-color: #e0f2f1;
+        }
+        footer {
+            background-color: #00796b;
+            color: #fff;
+            padding: 1rem 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            border-top: 4px solid #004d40;
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <h1>AQI Prediction</h1>
+        <button class="toggle-button" onclick="toggleTheme()">
+            <i class="fas fa-sun" id="sun-icon"></i>
+            <i class="fas fa-moon" id="moon-icon" style="display: none;"></i>
+        </button>
+    </header>
     <div class="prediction-form">
-       <h1>Air Quality Prediction</h1>
-   
-       <form action="{{ url_for('predict_datapoint')}}" method="post">
-        <h2>
-            <legend>Enter Air Quality Parameters</legend>
-        </h2>
-        <div class="mb-3">
-            <label class="form-label">PM2.5 (µg/m³)</label>
-            <input class="form-control" type="number" name="PM2_5" placeholder="Enter PM2.5 level" step="0.01" required />
-        </div>
-        <div class="mb-3">
-            <label class="form-label">NO2 (µg/m³)</label>
-            <input class="form-control" type="number" name="NO2" placeholder="Enter NO2 level" step="0.01" required />
-        </div>
-        <div class="mb-3">
-            <label class="form-label">CO (mg/m³)</label>
-            <input class="form-control" type="number" name="CO" placeholder="Enter CO level" step="0.01" required />
-        </div>
-        <div class="mb-3">
-            <label class="form-label">SO2 (µg/m³)</label>
-            <input class="form-control" type="number" name="SO2" placeholder="Enter SO2 level" step="0.01" required />
-        </div>
-        <div class="mb-3">
-            <label class="form-label">O3 (µg/m³)</label>
-            <input class="form-control" type="number" name="O3" placeholder="Enter O3 level" step="0.01" required />
-        </div>
-        <div class="mb-3">
-            <input class="btn btn-primary" type="submit" value="Predict Air Quality" />
-        </div>
-    </form>
-    {% if results is not none %}
-    <h2>
-       The prediction is: {{ results }}
-    </h2>
-    {% endif %}
-</div>
+        <h1>Air Quality Prediction</h1>
+        <form action="{{ url_for('predict_datapoint') }}" method="post">
+            <h2>Enter Air Quality Parameters</h2>
+            <div class="mb-3">
+                <label class="form-label" for="PM2_5">PM2.5 (µg/m³)</label>
+                <input class="form-control" type="number" name="PM2_5" id="PM2_5" placeholder="Enter PM2.5 level" step="0.01" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="NO2">NO2 (µg/m³)</label>
+                <input class="form-control" type="number" name="NO2" id="NO2" placeholder="Enter NO2 level" step="0.01" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="CO">CO (mg/m³)</label>
+                <input class="form-control" type="number" name="CO" id="CO" placeholder="Enter CO level" step="0.01" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="SO2">SO2 (µg/m³)</label>
+                <input class="form-control" type="number" name="SO2" id="SO2" placeholder="Enter SO2 level" step="0.01" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="O3">O3 (µg/m³)</label>
+                <input class="form-control" type="number" name="O3" id="O3" placeholder="Enter O3 level" step="0.01" required />
+            </div>
+            <div class="mb-3">
+                <input class="btn-primary" type="submit" value="Predict Air Quality" />
+            </div>
+        </form>
+        {% if results is not none %}
+            <h2>The prediction is: {{ results }}</h2>
+        {% endif %}
+        <table class="aqi-table">
+            <caption>AQI Categories Reference</caption>
+            <thead>
+                <tr>
+                    <th>Range</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>0 - 50</td>
+                    <td>Good</td>
+                    <td>Air quality is considered satisfactory, and air pollution poses little or no risk.</td>
+                </tr>
+                <tr>
+                    <td>51 - 100</td>
+                    <td>Moderate</td>
+                    <td>Air quality is acceptable; however, there may be a risk for some people, particularly those who are unusually sensitive to air pollution.</td>
+                </tr>
+                <tr>
+                    <td>101 - 150</td>
+                    <td>Unhealthy for Sensitive Groups</td>
+                    <td>Members of sensitive groups may experience health effects. The general public is less likely to be affected.</td>
+                </tr>
+                <tr>
+                    <td>151 - 200</td>
+                    <td>Unhealthy</td>
+                    <td>Everyone may begin to experience health effects; members of sensitive groups may experience more serious health effects.</td>
+                </tr>
+                <tr>
+                    <td>201 - 300</td>
+                    <td>Very Unhealthy</td>
+                    <td>Health alert: everyone may experience more serious health effects.</td>
+                </tr>
+                <tr>
+                    <td>301 - 500</td>
+                    <td>Hazardous</td>
+                    <td>Health warning of emergency conditions. The entire population is more likely to be affected.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer>
+        &copy; 2024 AQI Prediction Model. All rights reserved.
+    </footer>
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const sunIcon = document.getElementById('sun-icon');
+            const moonIcon = document.getElementById('moon-icon');
+            if (document.body.classList.contains('dark-mode')) {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'inline';
+            } else {
+                sunIcon.style.display = 'inline';
+                moonIcon.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>

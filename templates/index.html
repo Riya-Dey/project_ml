@@ -4,63 +4,163 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
             text-align: center;
+            transition: background-color 0.3s, color 0.3s;
         }
         header {
-            background-color: #007bff;
+            background-color: #00796b;
             color: #fff;
-            padding: 1rem;
+            padding: 1rem 0;
+            border-bottom: 4px solid #004d40;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        header h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+        .toggle-button {
+            position: absolute;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .toggle-button:hover {
+            color: #004d40;
         }
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 2rem auto;
-            padding: 1rem;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            margin-bottom: 1rem;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, color 0.3s;
         }
         p {
             font-size: 1.1rem;
             margin: 1rem 0;
+            line-height: 1.6;
         }
         a {
             text-decoration: none;
-            color: #007bff;
+            color: #00796b;
             font-weight: bold;
+            transition: color 0.3s, text-decoration 0.3s;
         }
         a:hover {
+            color: #004d40;
             text-decoration: underline;
         }
         .img-container {
             margin: 2rem 0;
         }
         img {
-            max-width: 100%;
+            max-width: 60%;
             height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #00796b;
+            color: #ffffff;
+            font-size: 0.9rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .project-info {
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.2); /* Light transparent color */
+            color: #000000;
             border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        }
+        .project-info h2 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+        .project-info p {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        .dark-mode header {
+            background-color: #1f1f1f;
+            border-bottom: 4px solid #383838;
+        }
+        .dark-mode .container {
+            background-color: #1e1e1e;
+        }
+        .dark-mode footer {
+            background-color: #1f1f1f;
+        }
+        .dark-mode .project-info {
+            background-color: rgba(255, 255, 255, 0.1); /* Darker transparent for dark mode */
+            color: #e0e0e0; /* Light text color for better contrast */
+        }
+        .dark-mode .project-info a {
+            color: #80cbc4; /* Light cyan color for links */
+        }
+        .dark-mode .project-info a:hover {
+            color: #4db6ac; /* Darker cyan for hover effect */
         }
     </style>
 </head>
 <body>
     <header>
         <h1>Air Quality Index (AQI) Prediction</h1>
+        <button class="toggle-button" onclick="toggleTheme()">
+            <i class="fas fa-sun" id="sun-icon"></i>
+            <i class="fas fa-moon" id="moon-icon" style="display: none;"></i>
+        </button>
     </header>
     <div class="container">
         <div class="img-container">
-            <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Faircentraltexas.org%2Fen%2Fregional-air-quality%2Faqi&psig=AOvVaw3zc20z_bo3T7wzonPIt4DI&ust=1722845702443000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJCMucfy2ocDFQAAAAAdAAAAABAE" alt="AQI Prediction Model">
+            <img src="https://media.istockphoto.com/id/1973047682/photo/good-air-quality-and-clean-outdoor-air-quality-safe-from-pollution-pm-2-5-dust-pure-natural.jpg?s=2048x2048&w=is&k=20&c=-NglYH65jEIJDp8YCMudpe1WrYcxQO9_qyU5aqpde0o=" alt="AQI Prediction Model">
         </div>
-        <p>Welcome to the AQI prediction model. Click the link below to go to the AQI calculation page:</p>
+        <p>Welcome to the AQI prediction model. Click the button below to proceed to the AQI calculation page:</p>
         <a href="{{ url_for('predict_datapoint') }}">Go to AQI Calculation Page</a>
+        <div class="project-info">
+            <h2>Project Information</h2>
+            <p>Done by: Riya Dey</p>
+            <p><a href="https://github.com/Riya-Dey/project_ml" target="_blank">GitHub URL</a></p>
+            <p>Contact: <a href="mailto:riyadey.0724@gmail.com">riyadey.0724@gmail.com</a></p>
+            <p><a href="https://www.linkedin.com/in/riya-dey/" target="_blank">LinkedIn Profile</a></p>
+        </div>
     </div>
+    <footer>
+        &copy; 2024 AQI Prediction Model. All rights reserved.
+    </footer>
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            const sunIcon = document.getElementById('sun-icon');
+            const moonIcon = document.getElementById('moon-icon');
+            if (document.body.classList.contains('dark-mode')) {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'inline';
+            } else {
+                sunIcon.style.display = 'inline';
+                moonIcon.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
