@@ -1,12 +1,16 @@
+<!DOCTYPE html>
 <html>
+<head>
+    <title>AQI Calculation</title>
+</head>
 <body>
     <div class="prediction-form">
        <h1>Air Quality Prediction</h1>
    
        <form action="{{ url_for('predict_datapoint')}}" method="post">
-        <h1>
+        <h2>
             <legend>Enter Air Quality Parameters</legend>
-        </h1>
+        </h2>
         <div class="mb-3">
             <label class="form-label">PM2.5 (µg/m³)</label>
             <input class="form-control" type="number" name="PM2_5" placeholder="Enter PM2.5 level" step="0.01" required />
@@ -28,12 +32,14 @@
             <input class="form-control" type="number" name="O3" placeholder="Enter O3 level" step="0.01" required />
         </div>
         <div class="mb-3">
-            <input class="btn btn-primary" type="submit" value="Predict Air Quality" required />
+            <input class="btn btn-primary" type="submit" value="Predict Air Quality" />
         </div>
     </form>
+    {% if results is not none %}
     <h2>
-       The prediction is: {{results}}
+       The prediction is: {{ results }}
     </h2>
+    {% endif %}
 </div>
 </body>
 </html>
