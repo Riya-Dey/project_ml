@@ -1,13 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 1rem;
+        }
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 1rem;
+        }
+        p {
+            font-size: 1.1rem;
+            margin: 1rem 0;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .img-container {
+            margin: 2rem 0;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the home page</h1>
-    <p>
-        Click the link below to go to the AQI calculation page:
+    <header>
+        <h1>Air Quality Index (AQI) Prediction</h1>
+    </header>
+    <div class="container">
+        <div class="img-container">
+            <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Faircentraltexas.org%2Fen%2Fregional-air-quality%2Faqi&psig=AOvVaw3zc20z_bo3T7wzonPIt4DI&ust=1722845702443000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCJCMucfy2ocDFQAAAAAdAAAAABAE" alt="AQI Prediction Model">
+        </div>
+        <p>Welcome to the AQI prediction model. Click the link below to go to the AQI calculation page:</p>
         <a href="{{ url_for('predict_datapoint') }}">Go to AQI Calculation Page</a>
-    </p>
+    </div>
 </body>
 </html>
